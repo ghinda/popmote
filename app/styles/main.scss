@@ -1,0 +1,200 @@
+/* PasswordMaker Mobile
+ */
+
+/* Bourbon
+ */
+@import '../bower_components/bourbon/dist/bourbon';
+
+/* Globals
+ */
+$color1: darken(desaturate(#f7ca18, 8%), 4%);
+
+/* Utils
+ */
+@import 'utils';
+
+/* Main
+*/
+
+*,
+*:before,
+*:after {
+  @include box-sizing(border-box);
+}
+
+body {
+  font-family: sans-serif;
+}
+
+div[ng-view] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.ng-hide {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#initial-spinner {
+  position: absolute;
+  top: calc(50% - 1.45rem);
+  left: calc(50% - 1.45rem);
+  width: 2.9rem;
+  height: 2.9rem;
+}
+
+/* Header
+ */
+
+section[role=region] > header:first-child {
+  background: $color1;
+}
+
+
+/* Fix firefoxos not scrolling to the bottom
+ * beacause of border-top
+ * for fixed header
+ */
+article.scrollable.header {
+  form {
+    margin-bottom: 5rem;
+  }
+}
+
+/* Profile menu
+ */
+
+.profile-menu {
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  z-index: 9;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0 1.5rem;
+  background: #fff;
+
+  @include transition(all .2s ease-out);
+}
+
+.profile-menu.ng-hide {
+  opacity: 0;
+  pointer-events: none;
+
+  @include transform(translateY(-20%));
+}
+
+.profile-menu section {
+  padding: 0;
+}
+
+.btn-new-profile {
+  margin: 1.5rem 0 0;
+}
+
+/* Profile
+ */
+
+.dialog-delete-confirm {
+  @include transition(all .2s ease-out);
+}
+
+.dialog-delete-confirm.ng-hide {
+  opacity: 0;
+  pointer-events: none;
+
+  @include transform(translateY(20%));
+}
+
+/* Forms
+ */
+
+form[data-type=list] {
+  overflow: hidden;
+  padding: 1.5rem;
+
+  p {
+    overflow: hidden;
+    margin: 0 0 1.5rem;
+  }
+
+  header {
+    margin: 0 0 1rem;
+  }
+
+  small {
+    color: #444;
+    font-size: 80%;
+  }
+
+  .pack-switch {
+    float: right;
+    margin: -0.5em 0 0 0;
+  }
+}
+
+form select {
+  width: 100%;
+}
+
+.password-generated {
+  input {
+    background: #efefef;
+  }
+}
+
+/* Fix dissapearing form clear button
+ */
+form p input + button[type=reset],
+form p textarea + button[type=reset] {
+  pointer-events: all;
+}
+
+[disabled] {
+  opacity: .3;
+  pointer-events: none;
+}
+
+/**
+ Animations
+ */
+$animation-time: 4s;
+
+.main-view {
+  z-index: 1;
+
+  @include transform(translate3d(0,0,0));
+}
+
+.main-view.popup.ng-enter {
+  @include animation(fadeInUp $animation-time forwards);
+}
+
+.main-view.popup.ng-leave {
+  @include animation(doNothing $animation-time forwards);
+}
+
+.main-view.popdown.ng-enter {
+  @include animation(doNothing $animation-time forwards);
+}
+
+.main-view.popdown.ng-leave {
+  z-index: 1000;
+
+  @include animation(fadeOutDown $animation-time forwards);
+}
+
+@include keyframes(doNothing) {
+  0% {
+    @include transform(translate3d(0, 0, 0));
+  }
+  100% {
+    @include transform(translate3d(0, 0, 0));
+  }
+}

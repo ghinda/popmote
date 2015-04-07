@@ -1,0 +1,10 @@
+node_modules
+.tmp
+.sass-cache
+public/
+*.zip
+
+# Editor
+.kateproject
+.kateproject.d
+*.kate-swp

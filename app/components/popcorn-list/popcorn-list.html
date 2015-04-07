@@ -1,0 +1,36 @@
+<section role="region" popcorn-list>
+
+  <header class="fixed">
+
+    <menu type="toolbar">
+      <a ng-click="Go('/profile/' + model.profile.id, 'popup')">
+        <span class="icon icon-compose">edit</span>
+      </a>
+    </menu>
+
+    <a ng-click="ToggleProfileMenu()">
+      <span class="icon icon-menu">show profiles</span>
+    </a>
+
+    <h1>
+      {{ ctrl.test }}
+    </h1>
+
+  </header>
+
+  <article class="scrollable header">
+
+    <form data-type="list">
+
+      <p>
+        <input type="text" placeholder="Password" ng-model="ctrl.test">
+
+        <button type="reset" ng-click="ClearModel(model, 'masterkey', $event)">Clear</button>
+      </p>
+
+    </form>
+
+  </article>
+
+</section>
+

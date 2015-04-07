@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>
+    popmote
+  </title>
+  <meta name="description" content="Popcorn Time Remote for FirefoxOS">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- build:css({.tmp,app}) /styles/app.css -->
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/action_menu.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/buttons.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/confirm.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/edit_mode.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/headers.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/icons.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/input_areas.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/status.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/switches.css">
+
+  <link rel="stylesheet" href="/bower_components/building-blocks/transitions.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/util.css">
+
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/lists.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/progress_activity.css">
+
+  <link rel="stylesheet" href="/bower_components/animate.css/animate.css">
+
+  <link rel="stylesheet" href="/styles/main.css">
+  <!-- endbuild -->
+</head>
+<body role="application" ng-csp ng-app="popmote">
+
+  <div ng-view class="main-view {{ root.viewTransition }}">
+    <progress id="initial-spinner"></progress>
+  </div>
+
+  <!-- build:js(app) /scripts/plugins.js -->
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-touch/angular-touch.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/localforage/dist/localforage.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) /scripts/app.js -->
+  <script src="/app.js"></script>
+  <script src="/components/popcorn-list/popcorn-list.js"></script>
+  <!-- endbuild -->
+
+</body>
+</html>
