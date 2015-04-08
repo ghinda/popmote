@@ -23,18 +23,18 @@ module.exports = function (grunt) {
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
-      sass: {
-        files: [ '<%= yeoman.app %>/styles/{,*/}*.{scss,sass}' ],
-        tasks: [ 'sass:server' ]
+      stylus: {
+        files: [ '<%= yeoman.app %>/styles/{,*/}*.styl' ],
+        tasks: [ 'stylus:server' ]
       },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '{.tmp,<%= yeoman.app %>}/{,*/}*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          '<%= yeoman.app %>/{,*/}*.{html,js}',
+          '<%= yeoman.app %>/{components,shared}/{,*/}*.{html,js}',
+          '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -42,7 +42,6 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
         hostname: '0.0.0.0'
       },
       livereload: {
@@ -89,15 +88,20 @@ module.exports = function (grunt) {
         '!<%= yeoman.app %>/scripts/passwordmaker/*.js'
       ]
     },
-    sass: {
+    stylus: {
+      options: {
+         'include css': true,
+          compress: false,
+          linenos: true
+      },
       dist: {
         files: {
-          '.tmp/styles/main.css': '<%= yeoman.app %>/styles/main.scss'
+          '.tmp/styles/main.css': '<%= yeoman.app %>/styles/main.styl'
         }
       },
       server: {
         files: {
-          '.tmp/styles/main.css': '<%= yeoman.app %>/styles/main.scss'
+          '.tmp/styles/main.css': '<%= yeoman.app %>/styles/main.styl'
         }
       }
     },
@@ -189,14 +193,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-    concurrent: {
-      server: [
-        'sass:server'
-      ],
-      dist: [
-        'sass:dist'
-      ]
-    },
     ngtemplates: {
       dist: {
         options: {
@@ -242,7 +238,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'concurrent:server',
+      'stylus:server',
       'connect:livereload',
       'watch'
     ]);
@@ -251,7 +247,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'jshint',
     'clean:dist',
-    'concurrent:dist',
+    'stylus:dist',
     'imagemin',
     'htmlmin',
     'useminPrepare',

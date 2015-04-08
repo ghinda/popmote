@@ -9,9 +9,9 @@
     "jquery": "2.1.3",
     "bourbon": "3.2.4",
     "momentjs": "2.10.0",
-    "building-blocks": "gh-pages",
     "localforage": "1.2.2",
-    "animate.css": "3.2.6"
+    "animate.css": "3.2.6",
+    "building-blocks": "7124d91efa"
   },
   "devDependencies": {}
 }

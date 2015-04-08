@@ -19,12 +19,15 @@
   <link rel="stylesheet" href="/bower_components/building-blocks/style/input_areas.css">
   <link rel="stylesheet" href="/bower_components/building-blocks/style/status.css">
   <link rel="stylesheet" href="/bower_components/building-blocks/style/switches.css">
+  <link rel="stylesheet" href="/bower_components/building-blocks/style/layout.css">
 
   <link rel="stylesheet" href="/bower_components/building-blocks/transitions.css">
-  <link rel="stylesheet" href="/bower_components/building-blocks/util.css">
+  
 
   <link rel="stylesheet" href="/bower_components/building-blocks/style/lists.css">
   <link rel="stylesheet" href="/bower_components/building-blocks/style/progress_activity.css">
+  
+  <link rel="stylesheet" href="/bower_components/building-blocks/util.css">
 
   <link rel="stylesheet" href="/bower_components/animate.css/animate.css">
 
@@ -33,9 +36,7 @@
 </head>
 <body role="application" ng-csp ng-app="popmote">
 
-  <div ng-view class="main-view {{ root.viewTransition }}">
-    <progress id="initial-spinner"></progress>
-  </div>
+  <div ng-view class="main-view {{ root.viewTransition }}"></div>
 
   <!-- build:js(app) /scripts/plugins.js -->
   <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -50,6 +51,7 @@
   <!-- build:js({.tmp,app}) /scripts/app.js -->
   <script src="/app.js"></script>
   <script src="/components/popcorn-list/popcorn-list.js"></script>
+  <script src="/shared/pt-api/pt-api-service.js"></script>
   <!-- endbuild -->
 
 </body>

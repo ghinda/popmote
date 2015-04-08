@@ -1,36 +1,51 @@
-<section role="region" popcorn-list>
+<section role="region" class="vbox fit" popcorn-list>
 
-  <header class="fixed">
+  <header ng-class="{ 'state-loading': ctrl.loadingAutodetect }">
 
     <menu type="toolbar">
       <a ng-click="Go('/profile/' + model.profile.id, 'popup')">
-        <span class="icon icon-compose">edit</span>
+        <span class="icon icon-add">add</span>
       </a>
     </menu>
 
-    <a ng-click="ToggleProfileMenu()">
-      <span class="icon icon-menu">show profiles</span>
-    </a>
-
     <h1>
-      {{ ctrl.test }}
+      Popcorn Time
     </h1>
 
-  </header>
+    <progress class="pack-activity light" value="0" max="100"></progress>
+    
+  </header>  
 
-  <article class="scrollable header">
+  <section data-type="list" class="fit scroll sticky">
+    <ul>
+      <li>
+        <a href="#/">
+          <p>
+            Popcorn Time v0.1.0-1
+          </p>
+          <p>
+            Running at http://192.168.1.162:8080
+          </p>
+        </a>
+      </li>
+      <li>
+        <a href="#/">
+          <p>
+            Popcorn Time v0.1.0-1
+          </p>
+          <p>
+            Running at http://192.168.1.162:8080
+          </p>
+        </a>
+      </li>
+    </ul>
+  </section>
 
-    <form data-type="list">
-
-      <p>
-        <input type="text" placeholder="Password" ng-model="ctrl.test">
-
-        <button type="reset" ng-click="ClearModel(model, 'masterkey', $event)">Clear</button>
-      </p>
-
-    </form>
-
-  </article>
+  <footer class="gaia-footer">
+    <button type="button" class="recommend" ng-click="ctrl.Autodetect()">
+      Autodetect Popcorn Time
+    </button>
+  </footer>
 
 </section>
 

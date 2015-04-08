@@ -1,30 +1,14 @@
-/* PasswordMaker Mobile
+/* popmote
  */
 
-/* Bourbon
- */
-@import '../bower_components/bourbon/dist/bourbon';
+@import 'nib';
 
 /* Globals
  */
-$color1: darken(desaturate(#f7ca18, 8%), 4%);
-
-/* Utils
- */
-@import 'utils';
+$color1 = darken(desaturate(#f7ca18, 8%), 4%);
 
 /* Main
 */
-
-*,
-*:before,
-*:after {
-  @include box-sizing(border-box);
-}
-
-body {
-  font-family: sans-serif;
-}
 
 div[ng-view] {
   position: absolute;
@@ -48,11 +32,22 @@ div[ng-view] {
   height: 2.9rem;
 }
 
+progress {
+  opacity: 0;
+  visibility: hidden;
+  transition: all .4s;
+}
+
+.state-loading progress {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Header
  */
 
 section[role=region] > header:first-child {
-  background: $color1;
+/*   background: $color1; */
 }
 
 
@@ -80,14 +75,14 @@ article.scrollable.header {
   padding: 0 1.5rem;
   background: #fff;
 
-  @include transition(all .2s ease-out);
+  transition: all .2s ease-out;
 }
 
 .profile-menu.ng-hide {
   opacity: 0;
   pointer-events: none;
 
-  @include transform(translateY(-20%));
+  transform: translateY(-20%);
 }
 
 .profile-menu section {
@@ -102,14 +97,14 @@ article.scrollable.header {
  */
 
 .dialog-delete-confirm {
-  @include transition(all .2s ease-out);
+  transition: all .2s ease-out;
 }
 
 .dialog-delete-confirm.ng-hide {
   opacity: 0;
   pointer-events: none;
 
-  @include transform(translateY(20%));
+  transform: translateY(20%);
 }
 
 /* Forms
@@ -164,37 +159,37 @@ form p textarea + button[type=reset] {
 /**
  Animations
  */
-$animation-time: 4s;
+$animation-time = 4s;
 
 .main-view {
   z-index: 1;
 
-  @include transform(translate3d(0,0,0));
+  transform: translate3d(0,0,0);
 }
 
 .main-view.popup.ng-enter {
-  @include animation(fadeInUp $animation-time forwards);
+  animation: fadeInUp $animation-time forwards;
 }
 
 .main-view.popup.ng-leave {
-  @include animation(doNothing $animation-time forwards);
+  animation: doNothing $animation-time forwards;
 }
 
 .main-view.popdown.ng-enter {
-  @include animation(doNothing $animation-time forwards);
+  animation: doNothing $animation-time forwards;
 }
 
 .main-view.popdown.ng-leave {
   z-index: 1000;
 
-  @include animation(fadeOutDown $animation-time forwards);
+  animation: fadeOutDown $animation-time forwards;
 }
 
-@include keyframes(doNothing) {
+@keyframes doNothing {
   0% {
-    @include transform(translate3d(0, 0, 0));
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    @include transform(translate3d(0, 0, 0));
+    transform: translate3d(0, 0, 0);
   }
 }

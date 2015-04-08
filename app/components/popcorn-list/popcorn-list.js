@@ -2,13 +2,39 @@
  * list of popcorn time instances
  */
 
-app.controller('popcornListCtrl', function () {
+app.controller('popcornListCtrl', function (ptApiService) {
   
-  this.test = 'test';
+  var ctrl = this;
+  
+  ctrl.loadingAutodetect = false;
+  
+  ctrl.Autodetect = function(){
+
+    ctrl.loadingAutodetect = true;
+    
+    ptApiService
+    .Autodetect()
+    .then(function(res) {
+      
+      console.log(res);
+      
+    })
+    .catch(function(e) {
+      
+      alert(e);
+      
+    })
+    .finally(function() {
+      
+      ctrl.loadingAutodetect = false;
+      
+    });
+    
+  };
   
 });
 
-app.directive('popcornList', function () {
+app.directive('popcornList', function (){
   return {
     scope: {},
     controller: 'popcornListCtrl',
