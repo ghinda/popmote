@@ -4,11 +4,15 @@
 app.factory('ptApiService', function($q, $http, dataService){
   'use strict';
   
+  // TODO set api username and password in model
+  
   var model = {
-    apiUrl: ''
+    url: '',
+    username: '',
+    password: ''
   };
   
-  var CallPtApi = function(data, ip, returnDeferred) {
+  var CallPtApi = function(data, returnDeferred) {
     
     var deferred = $q.defer();
     
@@ -18,19 +22,26 @@ app.factory('ptApiService', function($q, $http, dataService){
     data.id = 10;
     data.jsonrpc = '2.0';
     
+    // get url, username and password from global model,
+    // but allow individual call overwrite.
+    var apiUrl = data.url || model.url;
+    var authorization = data.username || model.username;
+    authorization += ':';
+    authorization += data.password || model.password;
+    
     $http({
       method: 'POST',
-      url: ip || config.apiUrl,
+      url: apiUrl,
       data: data,
       headers: {
-        'Authorization': window.btoa(data.username + ':' + data.password)
+        'Authorization': window.btoa(authorization)
       },
       timeout: deferred.promise
     })
     .success(function(res) {
       
-      if(ip) {
-        res.result.url = ip;
+      if(data.url) {
+        res.result.url = data.url;
       }
       
       deferred.resolve(res.result);
@@ -43,7 +54,7 @@ app.factory('ptApiService', function($q, $http, dataService){
     })
     .finally(function() {
       
-      if(!ip) {
+      if(!returnDeferred) {
         dataService.HideLoading();
       }
       
@@ -90,9 +101,10 @@ app.factory('ptApiService', function($q, $http, dataService){
       
       var def = CallPtApi({
           method: 'ping',
+          url: partialIp + i + ':8008',
           username: 'popcorn',
           password: 'popcorn'
-        }, partialIp + i + ':8008', true);
+        }, true);
       
       def[0]
       .then(function(res) {
