@@ -2,31 +2,29 @@
  * list of popcorn time instances
  */
 
-app.controller('popcornListCtrl', function (ptApiService) {
+app.controller('popcornListCtrl', function (ptApiService, dataService) {
   
   var ctrl = this;
   
-  ctrl.loadingAutodetect = false;
+  ctrl.data = dataService.model;
+  
+  dataService.GetInstances();
   
   ctrl.Autodetect = function(){
-
-    ctrl.loadingAutodetect = true;
     
     ptApiService
     .Autodetect()
     .then(function(res) {
       
-      console.log(res);
+      // TODO check if we don't already have it in the list
+      // and replace details if we do
+      
+      dataService.AddInstance(res);
       
     })
     .catch(function(e) {
       
       alert(e);
-      
-    })
-    .finally(function() {
-      
-      ctrl.loadingAutodetect = false;
       
     });
     

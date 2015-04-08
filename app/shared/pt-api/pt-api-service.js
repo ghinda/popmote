@@ -1,59 +1,78 @@
 /* pt api service
  */
 
-app.factory('ptApiService', function($q, $http){
+app.factory('ptApiService', function($q, $http, dataService){
   'use strict';
   
-  var pingPopcorn = function(ip, deferred) {
-      
-    var xhr = new XMLHttpRequest();
-
-    var request = {};
-    request.params = {};
-    request.id = 10;
-    request.method = 'ping';
-    request.jsonrpc = '2.0';
-
-    xhr.addEventListener('load', function(e) {
-      pingCallback(e, ip, deferred);
-    }, false);
-    xhr.addEventListener('error', function(e) {
-      pingCallback(e, ip, deferred)
-    }, false);
-
-    xhr.open('POST', ip, true);
-    xhr.setRequestHeader('Authorization', window.btoa('popcorn:popcorn'));
-    xhr.send(JSON.stringify(request));
+  var model = {
+    apiUrl: ''
+  };
+  
+  var CallPtApi = function(data, ip, returnDeferred) {
     
-    return xhr;
+    var deferred = $q.defer();
+    
+    dataService.ShowLoading();
 
+    data.params = data.params || {};
+    data.id = 10;
+    data.jsonrpc = '2.0';
+    
+    $http({
+      method: 'POST',
+      url: ip || config.apiUrl,
+      data: data,
+      headers: {
+        'Authorization': window.btoa(data.username + ':' + data.password)
+      },
+      timeout: deferred.promise
+    })
+    .success(function(res) {
+      
+      if(ip) {
+        res.result.url = ip;
+      }
+      
+      deferred.resolve(res.result);
+
+    })
+    .error(function(err) {
+      
+      deferred.reject(err);
+      
+    })
+    .finally(function() {
+      
+      if(!ip) {
+        dataService.HideLoading();
+      }
+      
+    });
+
+    if(returnDeferred) {
+      return [deferred.promise, deferred];
+    }
+    
+    return deferred.promise;
+    
   };
 
-  var searchQueue;
-  var searchIndex;
+  var promiseQueue;
+  var deferQueue;
   var limit = 255;
-  var startTime;
 
-  var pingCallback = function(e, url, deferred) {
-
-    searchIndex++;
+  var autodetectCallback = function(err, res, deferred) {
     
-    if(e.type !== 'error') {
+    if(!err) {
       
-      var foundTime = Date.now() - startTime;
-        
-      searchQueue.forEach(function(q) {
-        if(q.readystate !== 4) {
-          q.abort();
-        }
+      dataService.HideLoading();
+      
+      deferQueue.forEach(function(q) {
+        q.resolve();
       });
       
-      return deferred.resolve('found at ' + url + ', in ' + (foundTime / 1000) + 's.');
+      return deferred.resolve(res);
       
-    }
-      
-    if(searchIndex === limit) {
-      deferred.reject('not found');
     }
     
   };
@@ -62,25 +81,49 @@ app.factory('ptApiService', function($q, $http){
     
     var deferred = $q.defer();
     
-    startTime = Date.now();
-    
     var partialIp = 'http://192.168.1.';
     
-    searchIndex = 0;
-    searchQueue = [];
+    promiseQueue = [];
+    deferQueue = [];
     
     for(var i = 0; i <= limit; i++) {
-      searchQueue.push(
-        pingPopcorn(partialIp + i + ':8008', deferred)
-      );
+      
+      var def = CallPtApi({
+          method: 'ping',
+          username: 'popcorn',
+          password: 'popcorn'
+        }, partialIp + i + ':8008', true);
+      
+      def[0]
+      .then(function(res) {
+        autodetectCallback(null, res, deferred)
+      })
+      .catch(function() {
+        autodetectCallback(true, {}, deferred)
+      });
+      
+      promiseQueue.push(def[0]);
+      deferQueue.push(def[1]);
+      
     }
+    
+    $q
+    .all(promiseQueue)
+    .then(function() {
+      
+      dataService.HideLoading();
+      
+      deferred.reject('not found');
+      
+    });
     
     return deferred.promise;
     
   };
   
   return {
-    Autodetect: Autodetect
+    Autodetect: Autodetect,
+    CallPtApi: CallPtApi
   }
 
 });

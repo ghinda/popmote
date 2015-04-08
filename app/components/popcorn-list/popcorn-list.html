@@ -1,6 +1,6 @@
 <section role="region" class="vbox fit" popcorn-list>
 
-  <header ng-class="{ 'state-loading': ctrl.loadingAutodetect }">
+  <header ng-class="{ 'state-loading': ctrl.data.loading }">
 
     <menu type="toolbar">
       <a ng-click="Go('/profile/' + model.profile.id, 'popup')">
@@ -9,7 +9,7 @@
     </menu>
 
     <h1>
-      Popcorn Time
+      Popmote
     </h1>
 
     <progress class="pack-activity light" value="0" max="100"></progress>
@@ -18,23 +18,14 @@
 
   <section data-type="list" class="fit scroll sticky">
     <ul>
-      <li>
+      <li ng-repeat="instance in ctrl.data.instances track by $index">
         <a href="#/">
           <p>
-            Popcorn Time v0.1.0-1
+            Popcorn Time {{ ::instance.popcornVersion }}
           </p>
           <p>
-            Running at http://192.168.1.162:8080
-          </p>
-        </a>
-      </li>
-      <li>
-        <a href="#/">
-          <p>
-            Popcorn Time v0.1.0-1
-          </p>
-          <p>
-            Running at http://192.168.1.162:8080
+            Running at 
+            {{ ::instance.url }}
           </p>
         </a>
       </li>
