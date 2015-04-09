@@ -1,46 +1,72 @@
 /* data service
  */
 
-app.factory('dataService', function($q, $http, $timeout){
+app.factory('dataService', function($q, $http, $timeout, ptApiService){
   'use strict';
   
   var model = {
-    loading: false,
     instances: []
-  };
-  
-  var ShowLoading = function() {
-    model.loading = true;
-  };
-  
-  var HideLoading = function() {
-    model.loading = false;
   };
   
   var GetInstances = function() {
     
     var deferred = $q.defer();
-
-    ShowLoading();
     
-    // get from localforage
-    localforage
-    .getItem('instances')
-    .then(function(instances) {
+    if(model.instances.length) {
       
-      $timeout(function() {
+      deferred.resolve(model.instances);
       
-        if(instances) {
-          model.instances = instances;
-        }
+    } else {
+    
+      // get from localforage
+      localforage
+      .getItem('instances')
+      .then(function(instances) {
+        
+        $timeout(function() {
+        
+          if(instances) {
+            model.instances = instances;
+          }
 
-        deferred.resolve(model.instances);
-      
-        HideLoading();
-      
+          deferred.resolve(model.instances);
+        
+        });
+
       });
+      
+    }
 
-    });
+    return deferred.promise;
+    
+  };
+  
+  var GetInstance = function(params) {
+    
+    var deferred = $q.defer();
+    
+    var instance;
+    
+    params.id = parseInt(params.id);
+    
+    if(model.instances.length) {
+      
+      instance = model.instances[params.id]
+      
+      deferred.resolve(instance);
+      
+    } else {
+    
+      GetInstances()
+      .then(function(instances) {
+        
+        instance = model.instances[params.id]
+        
+        deferred.resolve(instance);
+        
+      });
+      
+    }
 
     return deferred.promise;
     
@@ -63,10 +89,9 @@ app.factory('dataService', function($q, $http, $timeout){
   
   return {
     model: model,
-    ShowLoading: ShowLoading,
-    HideLoading: HideLoading,
     
     GetInstances: GetInstances,
+    GetInstance: GetInstance,
     AddInstance: AddInstance
   }
 

@@ -1,7 +1,7 @@
 /* pt api service
  */
 
-app.factory('ptApiService', function($q, $http, dataService){
+app.factory('ptApiService', function($q, $http){
   'use strict';
   
   // TODO set api username and password in model
@@ -9,14 +9,29 @@ app.factory('ptApiService', function($q, $http, dataService){
   var model = {
     url: '',
     username: '',
-    password: ''
+    password: '',
+    loading: false
+  };
+  
+  var ShowLoading = function() {
+    model.loading = true;
+  };
+  
+  var HideLoading = function() {
+    model.loading = false;
+  };
+  
+  var SetApiDetails = function(params) {
+    
+    angular.extend(model, params);
+    
   };
   
   var CallPtApi = function(data, returnDeferred) {
     
     var deferred = $q.defer();
     
-    dataService.ShowLoading();
+    ShowLoading();
 
     data.params = data.params || {};
     data.id = 10;
@@ -55,7 +70,7 @@ app.factory('ptApiService', function($q, $http, dataService){
     .finally(function() {
       
       if(!returnDeferred) {
-        dataService.HideLoading();
+        HideLoading();
       }
       
     });
@@ -76,7 +91,7 @@ app.factory('ptApiService', function($q, $http, dataService){
     
     if(!err) {
       
-      dataService.HideLoading();
+      HideLoading();
       
       deferQueue.forEach(function(q) {
         q.resolve();
@@ -123,7 +138,7 @@ app.factory('ptApiService', function($q, $http, dataService){
     .all(promiseQueue)
     .then(function() {
       
-      dataService.HideLoading();
+      HideLoading();
       
       deferred.reject('not found');
       
@@ -134,8 +149,13 @@ app.factory('ptApiService', function($q, $http, dataService){
   };
   
   return {
+    model: model,
+    ShowLoading: ShowLoading,
+    HideLoading: HideLoading,
+    
     Autodetect: Autodetect,
-    CallPtApi: CallPtApi
+    CallPtApi: CallPtApi,
+    SetApiDetails: SetApiDetails
   }
 
 });

@@ -13,6 +13,9 @@ var app = angular.module('popmote', [
   .when('/', {
     templateUrl: '/components/popcorn-list/popcorn-list.html'
   })
+  .when('/remote/:id', {
+    templateUrl: '/components/remote/remote.html'
+  })
   .otherwise({
     redirectTo: '/'
   });

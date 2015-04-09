@@ -7,6 +7,7 @@ app.controller('popcornListCtrl', function (ptApiService, dataService) {
   var ctrl = this;
   
   ctrl.data = dataService.model;
+  ctrl.api = ptApiService.model;
   
   dataService.GetInstances();
   

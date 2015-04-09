@@ -1,4 +1,4 @@
-<section role="region" class="vbox fit" popcorn-list>
+<section role="region" class="vbox fit" remote>
 
   <header ng-class="{ 'state-loading': ctrl.api.loading }">
 
@@ -9,7 +9,7 @@
     </menu>
 
     <h1>
-      Popmote
+      remote
     </h1>
 
     <progress class="pack-activity light" value="0" max="100"></progress>
@@ -17,19 +17,33 @@
   </header>  
 
   <section data-type="list" class="fit scroll sticky">
-    <ul>
-      <li ng-repeat="instance in ctrl.data.instances track by $index">
-        <a href="#/remote/{{ $index }}">
-          <p>
-            Popcorn Time {{ ::instance.popcornVersion }}
-          </p>
-          <p>
-            Running at 
-            {{ ::instance.url }}
-          </p>
-        </a>
-      </li>
-    </ul>
+   
+   {{ ctrl.instance }}
+   
+   <button ng-click="ctrl.PtAction('left')">
+      left
+   </button>
+   
+   <button ng-click="ctrl.PtAction('right')">
+      right
+   </button>
+   
+   <button ng-click="ctrl.PtAction('up')">
+      up
+   </button>
+   
+   <button ng-click="ctrl.PtAction('enter')">
+      enter
+   </button>
+   
+   <button ng-click="ctrl.PtAction('back')">
+      back
+   </button>
+   
+   <button ng-click="ctrl.PtAction('down')">
+      down
+   </button>
+   
   </section>
 
   <footer class="gaia-footer">
