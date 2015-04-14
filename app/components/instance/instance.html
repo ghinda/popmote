@@ -1,0 +1,64 @@
+<section role="region" class="vbox fit" instance>
+
+  <header ng-class="{ 'state-loading': ctrl.api.loading }">
+
+    <button type="button" ng-click="ctrl.viewTransition.Go('/', 'popdown')">
+      <span class="icon icon-close">close</span>
+    </button>
+  
+    <menu type="toolbar">
+      <a ng-click="ctrl.SaveInstance()">
+        done
+      </a>
+    </menu>
+
+    <h1>
+      instance
+    </h1>
+
+    <progress class="pack-activity light" value="0" max="100"></progress>
+    
+  </header>  
+
+  <section class="content fit scroll sticky">
+    
+    <form>
+
+      <header>
+        <h2>
+          Connection details
+        </h2>
+      </header>
+      
+      <p>
+        <input type="text" placeholder="Name" ng-model="ctrl.instance.name" required>
+        <button type="reset">Clear</button>
+      </p>
+
+      
+      <p>
+        <input type="text" placeholder="192.168.1.2" ng-model="ctrl.instance.ip" required>
+        <button type="reset">Clear</button>
+      </p>
+      
+      <p>
+        <input type="text" placeholder="8080" ng-model="ctrl.instance.port" required>
+        <button type="reset">Clear</button>
+      </p>
+      
+      <p>
+        <input type="text" placeholder="Username" ng-model="ctrl.instance.username" required>
+        <button type="reset">Clear</button>
+      </p>
+      
+      <p>
+        <input type="text" placeholder="Password" ng-model="ctrl.instance.password" required>
+        <button type="reset">Clear</button>
+      </p>
+      
+    </form>
+    
+  </section>
+
+</section>
+

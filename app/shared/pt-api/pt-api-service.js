@@ -7,7 +7,8 @@ app.factory('ptApiService', function($q, $http){
   // TODO set api username and password in model
   
   var model = {
-    url: '',
+    ip: '',
+    port: '',
     username: '',
     password: '',
     loading: false
@@ -39,7 +40,7 @@ app.factory('ptApiService', function($q, $http){
     
     // get url, username and password from global model,
     // but allow individual call overwrite.
-    var apiUrl = data.url || model.url;
+    var apiUrl = data.url || ('http://' + model.ip + ':' + model.port);
     var authorization = data.username || model.username;
     authorization += ':';
     authorization += data.password || model.password;
@@ -103,11 +104,14 @@ app.factory('ptApiService', function($q, $http){
     
   };
   
-  var Autodetect = function() {
+  var Autodetect = function(params) {
     
     var deferred = $q.defer();
     
-    var partialIp = 'http://192.168.1.';
+    var username = params.username;
+    var password = params.password;
+    var url = params.url;
+    var port = params.port;
     
     promiseQueue = [];
     deferQueue = [];
@@ -116,9 +120,9 @@ app.factory('ptApiService', function($q, $http){
       
       var def = CallPtApi({
           method: 'ping',
-          url: partialIp + i + ':8008',
-          username: 'popcorn',
-          password: 'popcorn'
+          url: url + i + ':' + port,
+          username: username,
+          password: password
         }, true);
       
       def[0]
@@ -134,6 +138,7 @@ app.factory('ptApiService', function($q, $http){
       
     }
     
+    // TODO for some reason, not working
     $q
     .all(promiseQueue)
     .then(function() {

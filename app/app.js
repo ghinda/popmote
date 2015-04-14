@@ -11,7 +11,10 @@ var app = angular.module('popmote', [
 
   $routeProvider
   .when('/', {
-    templateUrl: '/components/popcorn-list/popcorn-list.html'
+    templateUrl: '/components/instance-list/instance-list.html'
+  })
+  .when('/instance/:id?', {
+    templateUrl: '/components/instance/instance.html'
   })
   .when('/remote/:id', {
     templateUrl: '/components/remote/remote.html'
@@ -20,13 +23,14 @@ var app = angular.module('popmote', [
     redirectTo: '/'
   });
 
-  // AngularJS doesn't trust app:// protocol by default, which is the protocol
-  // Firefox OS uses for packaged apps
+  // AngularJS doesn't trust the FirefoxOS app:// protocol by default
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|app):/);
 
 });
 
 app.run(function($rootScope, $location, $timeout){
   'use strict';
+  
+  var root = $rootScope.root = {};
 
 });

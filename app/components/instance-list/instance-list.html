@@ -1,9 +1,9 @@
-<section role="region" class="vbox fit" popcorn-list>
+<section role="region" class="vbox fit" instance-list>
 
   <header ng-class="{ 'state-loading': ctrl.api.loading }">
 
     <menu type="toolbar">
-      <a ng-click="Go('/profile/' + model.profile.id, 'popup')">
+      <a ng-click="ctrl.viewTransition.Go('/instance/', 'popup')">
         <span class="icon icon-add">add</span>
       </a>
     </menu>
@@ -19,13 +19,13 @@
   <section data-type="list" class="fit scroll sticky">
     <ul>
       <li ng-repeat="instance in ctrl.data.instances track by $index">
-        <a href="#/remote/{{ $index }}">
+        <a ng-click="ctrl.viewTransition.Go('/remote/' + $index)">
           <p>
-            Popcorn Time {{ ::instance.popcornVersion }}
+            {{ ::instance.name }}
           </p>
           <p>
             Running at 
-            {{ ::instance.url }}
+            {{ ::instance.ip }}
           </p>
         </a>
       </li>

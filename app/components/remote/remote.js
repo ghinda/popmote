@@ -18,11 +18,7 @@ app.controller('remoteCtrl', function ($routeParams, ptApiService, dataService) 
     
     ctrl.instance = instance;
     
-    ptApiService.SetApiDetails({
-      url: instance.url,
-      username: 'popcorn',
-      password: 'popcorn'
-    });
+    ptApiService.SetApiDetails(instance);
     
     ptApiService.CallPtApi({
       method: 'getsubtitles'
