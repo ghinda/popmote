@@ -31,10 +31,7 @@ app.provider('RouteAnimationManager', function()  {
   //define factory instance
   function RouteAnimationManager() {
     this.setAnimationClass =  function(currentRoute, nextRoute) {
-      
       if (!currentRoute || !nextRoute || !nextRoute.originalPath || !nextRoute.data || !nextRoute.data.animationConf) {return undefined;}
-      
-      console.log(currentRoute.originalPath.substring(1));
 
       var conf = nextRoute.data.animationConf;
       var name = currentRoute.originalPath.substring(1) || 'root'; //root refers to the '/' route
