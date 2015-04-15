@@ -5,16 +5,27 @@
 var app = angular.module('popmote', [
   'ngRoute',
   'ngTouch',
-  'ngAnimate'
+  'ngAnimate',
+  'ngRouteAnimationManager'
 ]).config(function($routeProvider, $compileProvider) {
   'use strict';
 
   $routeProvider
   .when('/', {
-    templateUrl: '/components/instance-list/instance-list.html'
+    templateUrl: '/components/instance-list/instance-list.html',
+    data: {
+      animationConf: {
+        'instance/:id?': 'popdown'
+      }
+    }
   })
   .when('/instance/:id?', {
-    templateUrl: '/components/instance/instance.html'
+    templateUrl: '/components/instance/instance.html',
+    data: {
+      animationConf: {
+        root: 'popup'
+      }
+    }
   })
   .when('/remote/:id', {
     templateUrl: '/components/remote/remote.html'

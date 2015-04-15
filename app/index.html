@@ -36,7 +36,9 @@
 </head>
 <body role="application" ng-csp ng-app="popmote">
 
-  <div ng-view class="main-view {{ root.viewTransition }}"></div>
+  <div route-animation-manager>
+    <div ng-view class="main-view"></div>
+  </div>
 
   <!-- build:js(app) /scripts/plugins.js -->
   <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -53,9 +55,10 @@
   <script src="/components/instance/instance.js"></script>
   <script src="/components/instance-list/instance-list.js"></script>
   <script src="/components/remote/remote.js"></script>
+  <script src="/components/view-transition/view-transition.js"></script>
   <script src="/shared/data/data-service.js"></script>
   <script src="/shared/pt-api/pt-api-service.js"></script>
-  <script src="/shared/view-transition/view-transition-service.js"></script>
+  <script src="/shared/route-animation-manager/route-animation-manager.js"></script>
   <!-- endbuild -->
 
 </body>

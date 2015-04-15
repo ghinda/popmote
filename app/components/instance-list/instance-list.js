@@ -2,11 +2,9 @@
  * list of popcorn time instances
  */
 
-app.controller('instanceListCtrl', function (ptApiService, dataService, viewTransition) {
+app.controller('instanceListCtrl', function (ptApiService, dataService) {
   
   var ctrl = this;
-  
-  ctrl.viewTransition = viewTransition;
   
   ctrl.data = dataService.model;
   ctrl.api = ptApiService.model;

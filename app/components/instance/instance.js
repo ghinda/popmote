@@ -1,11 +1,9 @@
 /* instance component
  */
 
-app.controller('instanceCtrl', function (ptApiService, dataService, viewTransition, $routeParams) {
+app.controller('instanceCtrl', function (ptApiService, dataService, $routeParams) {
   
   var ctrl = this;
-  
-  ctrl.viewTransition = viewTransition;
   
   ctrl.data = dataService.model;
   ctrl.api = ptApiService.model;
@@ -22,7 +20,7 @@ app.controller('instanceCtrl', function (ptApiService, dataService, viewTransiti
     
     // TODO save and redirect
     
-    ctrl.viewTransition.Go('/', 'popdown');
+    //ctrl.viewTransition.Go('/', 'popdown');
     
   };
   

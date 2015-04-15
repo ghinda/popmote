@@ -167,22 +167,22 @@ $animation-time = .4s;
   transform: translate3d(0,0,0);
 }
 
-.main-view.popup.ng-enter {
+.popup .main-view.ng-enter {
   animation: fadeInUp $animation-time forwards;
 }
 
-.main-view.popup.ng-leave {
+.popup .main-view.ng-leave {
   animation: doNothing $animation-time forwards;
 }
 
-.main-view.popdown.ng-enter {
-  animation: doNothing $animation-time forwards;
-}
-
-.main-view.popdown.ng-leave {
-  z-index: 1000;
-
+.popdown .main-view.ng-leave {
+  z-index: 2;
+  
   animation: fadeOutDown $animation-time forwards;
+}
+
+.popdown .main-view.ng-enter {
+  animation: doNothing $animation-time forwards;
 }
 
 @keyframes doNothing {
